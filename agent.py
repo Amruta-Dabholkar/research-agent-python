@@ -95,7 +95,10 @@ def repair_blank_table_cells(report: str, llm: ChatGroq) -> str:
     return repaired
 
 
-def build_agent(callbacks=None, max_iterations: int = 15) -> AgentExecutor:
+def build_agent(callbacks=None, max_iterations: int = 15):
+    """Returns (executor, llm). llm is returned separately — rather than
+    attached to the executor — because AgentExecutor is a Pydantic model
+    and does not allow arbitrary extra attributes to be set on it."""
     llm = ChatGroq(
         model=AGENT_MODEL,
         temperature=0,
@@ -129,12 +132,7 @@ def build_agent(callbacks=None, max_iterations: int = 15) -> AgentExecutor:
         callbacks=callbacks,
     )
 
-    # Stash the llm on the executor so callers (e.g. run_research_agent)
-    # can reuse it for the table-repair pass without building a second
-    # ChatGroq client.
-    executor.llm = llm
-
-    return executor
+    return executor, llm
 
 
 def run_research_agent(goal: str, callbacks=None, max_iterations: int = 15) -> str:
@@ -144,10 +142,10 @@ def run_research_agent(goal: str, callbacks=None, max_iterations: int = 15) -> s
     call this rather than calling build_agent()/executor.invoke() directly,
     so the "no blank cells" guarantee can't be bypassed by one caller
     forgetting the repair step."""
-    executor = build_agent(callbacks=callbacks, max_iterations=max_iterations)
+    executor, llm = build_agent(callbacks=callbacks, max_iterations=max_iterations)
     result = executor.invoke({"input": goal})
     report = result.get("output", "")
-    return repair_blank_table_cells(report, executor.llm)
+    return repair_blank_table_cells(report, llm)
 
 
 def main():
