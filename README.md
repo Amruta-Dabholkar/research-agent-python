@@ -1,16 +1,55 @@
-# Autonomous Research & Reporting Agent — Python/LangChain Version
+# 🔍 Autonomous Research Agent
 
-This is the raw-code rebuild of the original n8n prototype. Same ReAct
-(Reason → Act → Observe) pattern, same three tools, but the reasoning loop,
-memory, and iteration limit are now explicit in code instead of hidden
-inside a no-code node.
+An autonomous research agent that takes a broad research goal, plans its own steps, searches the web, scrapes pages for ground-truth detail, and compiles a structured report — all with minimal human input.
 
-## Setup
+**Powered by:** Groq · Streamlit · LangChain
 
-1. Create a virtual environment:
+🔗 **Live demo:** [research-agent-python.streamlit.app](https://research-agent-python.streamlit.app/)
+👤 **Author:** [Amruta Dabholkar](https://github.com/Amruta-Dabholkar) · [LinkedIn](https://www.linkedin.com/in/amruta-dabholkar/)
+
+---
+
+## ✨ Features
+
+- **Goal-driven autonomy** — Give it a single research goal in plain English and the agent breaks it down into sub-tasks on its own.
+- **Live agent reasoning** — Watch each tool call as it happens (`web_search`, `scrape_page`, etc.) along with the exact query or URL used.
+- **Structured final report** — Automatically compiled into clear sections (e.g. Introduction, Key Risks, Mitigation Strategies, Conclusion) with numbered, bolded key points.
+- **Configurable iteration limit** — A `Max Iterations` slider controls how many reasoning/tool-use steps the agent is allowed to take (default: 10).
+- **Exportable reports** — Download any completed report as a Markdown (`.md`) file.
+- **Session history** — Past runs are saved and viewable within the current session for easy comparison.
+
+---
+
+## 🖥️ How It Works
+
+1. Enter a **Research goal** describing what you want investigated (e.g. *"Analyze cybersecurity risks in cloud-based education platforms and propose mitigation strategies."*).
+2. Click **Run research**.
+3. The agent plans its approach and works through it autonomously, shown live under **Agent reasoning**:
+   - `web_search` — queries the web for relevant sources.
+   - `scrape_page` — pulls detailed, ground-truth content from specific pages.
+4. Once complete, a **Final report** is generated with headed sections and takeaways.
+5. Use **Download report (.md)** to save the report locally, or expand **Past runs in this session** to revisit earlier reports.
+
+---
+
+## ⚙️ Requirements
+
+- Python 3.9+
+- [Streamlit](https://streamlit.io/)
+- [LangChain](https://www.langchain.com/)
+- A **Groq API key** (the agent's reasoning is Groq-powered)
+- A web search / scraping API key or service, depending on how `web_search` and `scrape_page` are implemented in this project
+
+> ⚠️ The app will display an **"API keys required"** status until valid keys are configured.
+
+---
+
+## 🔑 Setup
+
+1. Clone the repository:
    ```bash
-   python -m venv venv
-   source venv/bin/activate   # on Windows: venv\Scripts\activate
+   git clone https://github.com/Amruta-Dabholkar/research-agent-python.git
+   cd research-agent-python
    ```
 
 2. Install dependencies:
@@ -18,63 +57,62 @@ inside a no-code node.
    pip install -r requirements.txt
    ```
 
-3. Copy the env file and add your keys:
+3. Configure your API keys, e.g. via a `.env` file or Streamlit secrets:
    ```bash
-   cp .env.example .env
+   GROQ_API_KEY=your_groq_api_key_here
+   # add any additional keys required for web_search / scrape_page tools
    ```
-   Then edit `.env` and paste in your `OPENAI_API_KEY` (platform.openai.com)
-   and `SERPAPI_API_KEY` (serpapi.com).
 
-4. Run it:
+4. Run the app:
    ```bash
-   python agent.py
+   streamlit run app.py
    ```
 
-5. Type a research goal at the prompt, e.g.:
-   ```
-   Research the top 3 project management tools and compare their pricing tiers.
-   ```
+5. Open the local URL Streamlit provides (usually `http://localhost:8501`) in your browser.
 
-With `verbose=True` set in `agent.py`, you'll see the live Thought → Action →
-Observation trace print to the terminal as it runs — this is your ReAct loop
-happening in real time, the same thing the n8n Logs panel showed you.
+---
 
-## Architecture
+## 📸 Screenshots
 
-```
-tools.py    -> web_search, scrape_page, calculator (the tool layer)
-agent.py    -> builds the LLM, binds the tools, adds memory,
-               wraps it all in an AgentExecutor with max_iterations=10
-```
+**Agentic workflow — live reasoning and tool calls**
+![Agentic workflow](screenshots/agentic-workflow.png)
 
-- **web_search**: calls SerpAPI directly via `requests`, returns top 5 results
-- **scrape_page**: fetches a URL, strips HTML with BeautifulSoup, truncates to
-  ~3000 chars (this is the fix for the context-overflow bug you hit in n8n —
-  here it's a hard limit in code instead of a UI toggle)
-- **calculator**: safely evaluates arithmetic expressions for price/percentage comparisons
-- **memory**: `ConversationBufferMemory` keeps the conversation across turns
-  within one run of the script
-- **max_iterations**: the safety guard against infinite loops, same concept
-  as n8n's iteration limit setting
+**Structured final report**
+![Structured output](screenshots/structured-output.png)
 
-## How this differs from the n8n version (for your resume/interview)
+**Mitigation strategies, conclusion, and report export**
+![Report export](screenshots/report-export.png)
 
-| n8n version | Python version |
-|---|---|
-| AI Agent node hides the loop internals | Loop is explicit via `AgentExecutor` |
-| Tool config via UI forms | Tools are plain Python functions with docstrings |
-| Memory via Simple Memory node | `ConversationBufferMemory` object in code |
-| Iteration limit via node setting | `max_iterations=10` parameter |
-| Delivery via Slack node | Add your own delivery step (see below) |
+---
 
-## Next steps to extend
+## 💡 Tips for Best Results
 
-- **Slack delivery**: use the `slack_sdk` package to post `result["output"]`
-  to a channel via a bot token or incoming webhook.
-- **Persistent memory**: swap `ConversationBufferMemory` for a vector-store-
-  backed memory (e.g. Chroma, FAISS) to recall past research across separate
-  runs, not just within one session.
-- **Critic step**: add a second LLM call that reviews the final report for
-  accuracy/completeness before returning it to the user.
-- **Cost tracking**: LangChain exposes token usage via callbacks — log this
-  per run if you want usage/cost tracking like the original doc mentions.
+- **Break down large goals** into smaller, focused sub-tasks for better results.
+- **Use consistent keywords** in your research goal to improve search accuracy.
+- **Save and review past reports** to refine future research prompts.
+- **Be patient** — complex research tasks may take the agent a few minutes to complete.
+
+---
+
+## 📦 Output Format
+
+Reports are compiled in structured Markdown, typically including:
+
+- **Introduction** — framing of the research topic
+- **Core Findings** — numbered, bolded points with explanations
+- **Recommendations / Mitigation Strategies** — actionable next steps
+- **Conclusion** — summary tying findings back to the original goal
+
+---
+
+## ❤️ Credits
+
+Made with Streamlit + LangChain.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE) — see the LICENSE file for details.
+
+Copyright (c) 2026 Amruta Anand Dabholkar
