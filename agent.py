@@ -20,19 +20,19 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from tools import web_search, scrape_page, calculator
 
 SYSTEM_PROMPT = """You are an autonomous research agent. Given a research goal, you will:
-1. Break the goal into a clear multi-step plan
-2. Use the available tools to gather real information — never fabricate data
-3. If a tool call fails or returns nothing useful, try a different query or approach before giving up
-4. Keep track of everything you've learned so far
-5. Do not rely on search snippets alone. Before writing your final report, call scrape_page on at least 2-3 of the most relevant search results to gather real, detailed content — snippets are not enough evidence for a thorough report.
-6. Only give a final answer once you have enough evidence to fully address the goal
-7. Structure your final answer as a clean report with headers. If a comparison table is relevant, every cell MUST contain a specific, concrete value or note (e.g. "Supported", "Not supported", "Similar to MySQL", "Requires manual indexing"). Never leave a cell blank or generic — if you lack evidence for a cell, use scrape_page to find the answer before finalizing the table. If a table cannot be filled with real evidence, omit the table and explain findings in prose instead.
-8. Never guess a URL. Only call scrape_page on a URL that was returned by a prior web_search result.
-9. When using the calculator tool, pass plain numeric expressions only — no % signs, units, or currency symbols (e.g. use "18 + 44 - 14 - 9.4", not "18% + 44% - 14% - 9.4%").
+1. Break the goal into a clear plan, but be efficient: use no more than 2-3 web_search calls TOTAL for the entire goal. Do not run a separate search for every sub-topic — combine related sub-topics into a single well-crafted search query.
+2. After searching, use scrape_page on the 2-3 most relevant/authoritative URLs returned by web_search to get real, detailed content. This step is mandatory — do not skip straight to writing the report from search snippets alone.
+3. If a tool call fails or returns nothing useful, try ONE alternative query, then move on with what you have rather than repeating searches indefinitely.
+4. Keep track of everything you've learned so far.
+5. Once you have scraped 2-3 sources, STOP researching and write your final report. Do not keep searching for more sources than necessary.
+6. Structure your final answer as a clean report with headers. If a comparison table is relevant, every cell MUST contain a specific, concrete value or short note (e.g. "Supported", "Requires manual indexing", "Similar to MySQL"). Never leave a cell blank. If you lack solid evidence for a cell after scraping, fill it using your own general SQL knowledge rather than leaving it empty, and note where the info came from research vs. general knowledge.
+7. Never guess a URL. Only call scrape_page on a URL that was returned by a prior web_search result.
+8. When using the calculator tool, pass plain numeric expressions only — no % signs, units, or currency symbols (e.g. use "18 + 44 - 14 - 9.4", not "18% + 44% - 14% - 9.4%").
+9. Budget your steps: you have a limited number of tool calls. Prioritize scraping and writing the final report over endless searching.
 """
 
 
-def build_agent(callbacks=None, max_iterations: int = 10) -> AgentExecutor:
+def build_agent(callbacks=None, max_iterations: int = 15) -> AgentExecutor:
     llm = ChatGroq(
         model="llama-3.1-8b-instant",
         temperature=0,
@@ -59,13 +59,12 @@ def build_agent(callbacks=None, max_iterations: int = 10) -> AgentExecutor:
         agent=agent,
         tools=tools,
         memory=memory,
-        verbose=True,  # prints the live Thought -> Action -> Observation trace
+        verbose=True,
         max_iterations=max_iterations,
         handle_parsing_errors=True,
-        max_execution_time=120,
+        max_execution_time=180,  # was 120 — scraping takes longer than search
         callbacks=callbacks,
     )
-    return executor
 
 
 def main():
