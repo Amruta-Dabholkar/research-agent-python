@@ -66,6 +66,8 @@ def build_agent(callbacks=None, max_iterations: int = 15) -> AgentExecutor:
         callbacks=callbacks,
     )
 
+    return executor
+
 
 def main():
     if not os.getenv("GROQ_API_KEY"):
