@@ -76,7 +76,7 @@ An autonomous research agent that takes a broad research goal, plans its own ste
 
 
 **Agentic workflow — live reasoning and tool calls**
-
+---
 
 ![Agentic workflow](screenshots/agentic-workflow.png)
 
