@@ -5,7 +5,7 @@ Streamlit UI for the Autonomous Research Agent.
 import os
 import streamlit as st
 from langchain_core.callbacks.base import BaseCallbackHandler
-from agent import build_agent
+from agent import run_research_agent
 
 st.set_page_config(page_title="Autonomous Research Agent", page_icon="\U0001F50E", layout="wide")
 
@@ -478,9 +478,9 @@ if run_clicked:
         report = None
         with st.spinner("Researching..."):
             try:
-                executor = build_agent(callbacks=[st_callback], max_iterations=max_iterations)
-                result = executor.invoke({"input": goal})
-                report = result.get("output", "")
+                report = run_research_agent(
+                    goal, callbacks=[st_callback], max_iterations=max_iterations
+                )
             except Exception as e:
                 st.error(f"Agent run failed: {e}")
 
