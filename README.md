@@ -82,13 +82,13 @@ An autonomous research agent that takes a broad research goal, plans its own ste
 
 
 **Structured final report**
-
+---
 
 ![Structured output](screenshots/structured-output.png)
 
 
 **Mitigation strategies, conclusion, and report export**
-
+---
 
 ![Report export](screenshots/report-export.png)
 
