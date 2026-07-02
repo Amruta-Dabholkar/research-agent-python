@@ -72,6 +72,19 @@ An autonomous research agent that takes a broad research goal, plans its own ste
 
 ---
 
+## 📸 Screenshots
+
+**Agentic workflow — live reasoning and tool calls**
+![Agentic workflow](screenshots/agentic-workflow.png)
+
+**Structured final report**
+![Structured output](screenshots/structured-output.png)
+
+**Mitigation strategies, conclusion, and report export**
+![Report export](screenshots/report-export.png)
+
+---
+
 ## 💡 Tips for Best Results
 
 - **Break down large goals** into smaller, focused sub-tasks for better results.
