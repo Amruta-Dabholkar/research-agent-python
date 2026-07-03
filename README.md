@@ -1,282 +1,202 @@
-<div align="center">
+# 🔍 Autonomous Research Agent
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:6366F1,50:8B5CF6,100:EC4899&height=200&section=header&text=Autonomous%20Research%20Agent&fontSize=42&fontColor=FFFFFF&animation=fadeIn&fontAlignY=38&desc=Plans.%20Searches.%20Scrapes.%20Writes.%20All%20on%20its%20own.&descAlignY=58&descSize=18"/>
+An autonomous research agent built with **LangChain** and **Groq**, wrapped in a **Streamlit** UI.
 
-<p>
-  <img src="https://img.shields.io/badge/status-active-8B5CF6?style=for-the-badge&labelColor=1E1B2E" alt="status"/>
-  <img src="https://img.shields.io/badge/license-MIT-6366F1?style=for-the-badge&labelColor=1E1B2E" alt="license"/>
-  <img src="https://img.shields.io/badge/python-3.9+-EC4899?style=for-the-badge&labelColor=1E1B2E" alt="python"/>
-</p>
+Give it a broad research goal — it plans its own sub-questions, researches each one independently, reflects on whether it has gathered enough evidence, and compiles everything into a structured Markdown report with headers, comparison tables, and sources — all without step-by-step guidance from the user.
 
-<p>
-  <a href="https://research-agent-python.streamlit.app/"><strong>Live Demo</strong></a> ·
-  <a href="#getting-started"><strong>Getting Started</strong></a> ·
-  <a href="#how-it-works"><strong>How It Works</strong></a> ·
-  <a href="#screenshots"><strong>Screenshots</strong></a> ·
-  <a href="#connect"><strong>Connect</strong></a>
-</p>
+This started as a from-scratch rebuild of an n8n AI Agent prototype: instead of relying on n8n's built-in agent node to hide the reasoning loop, every piece of the pipeline — planning, tool use, memory, failure handling, and stopping conditions — is wired up explicitly in code, so the whole system is visible, debuggable, and tunable.
 
-</div>
+🔗 **Live demo:** [research-agent-python.streamlit.app](https://research-agent-python.streamlit.app/)
+👤 **Author:** [Amruta Dabholkar](https://github.com/Amruta-Dabholkar) · [LinkedIn](https://www.linkedin.com/in/amruta-dabholkar/)
 
-<br/>
+---
 
-## Table of Contents
+## How it works
 
-- [Overview](#overview)
-- [Problem Statement](#problem-statement)
-- [Solution](#solution)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [How It Works](#how-it-works)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Screenshots](#screenshots)
-- [Roadmap](#roadmap)
-- [License](#license)
-- [Connect](#connect)
+Most "agent" projects are a single LLM stuck in a tool-calling loop until it decides to stop or runs out of steps. This one is structured differently, in four explicit phases:
 
-<br/>
+```
+   PLAN                EXECUTE                REFLECT              SYNTHESIZE
+┌───────────┐     ┌─────────────────┐     ┌───────────────┐     ┌──────────────┐
+│ Break the │────▶│ Research each   │────▶│ Enough         │────▶│ Write the    │
+│ goal into │     │ sub-question    │     │ evidence to    │     │ final report │
+│ 3-5 sub-  │     │ with a scoped   │     │ answer the     │     │ with a       │
+│ questions │     │ tool-calling    │     │ goal?          │     │ Sources      │
+│           │     │ agent           │     │                │     │ section      │
+└───────────┘     └─────────────────┘     └───────┬────────┘     └──────────────┘
+                                                     │ no, gaps found
+                                                     ▼
+                                          run 1-2 follow-up
+                                          sub-questions, then
+                                          reflect again
+```
 
-## Overview
+1. **Plan** — a dedicated LLM call decomposes the research goal into 3–5 concrete, independently-answerable sub-questions
+2. **Execute** — each sub-question is handed to a small, scoped tool-calling agent (its own bounded iteration budget) that searches, scrapes, and returns a concise finding + the sources it used
+3. **Reflect** — a dedicated LLM call reviews all findings against the *original* goal and decides: is this enough evidence to write a complete report, or are there real gaps? This is the actual stopping condition — not just "ran out of steps." If gaps are found, it proposes up to 2 follow-up sub-questions and loops once more.
+4. **Synthesize** — once reflection is satisfied, a final LLM call writes the polished Markdown report from all gathered findings, with a Sources section listing every URL actually used
 
-**Autonomous Research Agent** turns a single, plain-English research goal into a fully-researched, structured report. Rather than answering from memory, the agent plans its own multi-step investigation, calls tools to search the web and scrape pages for ground-truth detail, and compiles its findings into a clean Markdown report — with its entire reasoning process visible in real time through a Streamlit interface.
+See `orchestrator.py` for the full implementation.
 
-> *"Analyze cybersecurity risks in cloud-based education platforms and propose mitigation strategies."*
-> Give it a prompt like that, and it plans, researches, and writes the report on its own.
-
-<br/>
-
-<img width="100%" height="4" src="https://capsule-render.vercel.app/api?type=rect&color=0:6366F1,50:8B5CF6,100:EC4899&height=4"/>
-
-## Problem Statement
-
-Manual research is slow, repetitive, and hard to scale:
-
-- Formulating the right search queries takes iteration and expertise
-- Relevant information is scattered across dozens of tabs and sources
-- More time goes into copy-pasting and skimming than actual analysis
-- Turning scattered notes into one coherent, well-structured report is a separate task in itself
-- The entire process has to be repeated from scratch for every new topic
-
-For students, developers, analysts, and lifelong learners, this makes fast, thorough research disproportionately time-consuming.
-
-<br/>
-
-## Solution
-
-Autonomous Research Agent automates the research pipeline end-to-end:
-
-| Problem | How the agent solves it |
-|---|---|
-| Manual query planning | Breaks a single goal into the right sub-questions automatically |
-| Scattered, shallow sources | Uses `web_search` + `scrape_page` to gather ground-truth content, not just snippets |
-| No visibility into the process | Streams live agent reasoning so you see exactly what it searched and why |
-| Disorganized notes | Synthesizes findings into a structured report — key findings, risks, recommendations, conclusion |
-| No reusable output | Exports the final report as a downloadable Markdown file |
-
-In short: you provide the question, the agent handles the investigation.
-
-<br/>
-
-<img width="100%" height="4" src="https://capsule-render.vercel.app/api?type=rect&color=0:6366F1,50:8B5CF6,100:EC4899&height=4"/>
+---
 
 ## Features
 
-<table>
-<tr>
-<td width="50%" valign="top">
+- 🧭 **Explicit plan → execute → reflect → synthesize loop**, not a flat tool-calling loop with an arbitrary step limit as the only stopping condition
+- 🔎 **Live web search** (DuckDuckGo, no API key required) and page scraping for grounded, non-fabricated data
+- 🧮 Built-in calculator tool for numeric comparisons (pricing, percentages, totals)
+- 🛡️ **Explicit failure handling**: automatic retries on timeouts/transient server errors, robots.txt compliance, paywall detection, and categorized error messages (404 vs. 403 vs. 429 vs. 5xx) so the agent can make a good decision about what to do next instead of hitting an opaque exception
+- 📊 Structured Markdown reports with tables, downloadable from the UI
+- 🎨 Custom-themed Streamlit interface showing live plan/reflection progress, not just raw tool calls
+- 🗂️ Session history — past runs are saved and viewable within the current session for comparison
+- ✅ **Measured, not just claimed** — see [Evaluation](#evaluation) below
 
-**Goal-driven autonomy**
-Give it one research goal — it plans and executes the rest.
+---
 
-**Live agent reasoning**
-Every tool call is visible in the UI as it happens.
+## 🖥️ Using the app
 
-**Structured final reports**
-Organized into clear, headed sections automatically.
+1. Enter a **Research goal** describing what you want investigated (e.g. *"Analyze cybersecurity risks in cloud-based education platforms and propose mitigation strategies."*).
+2. Click **Run research**.
+3. Watch the agent plan and work through it autonomously, shown live under **Agent reasoning**:
+   - `web_search` — queries the web for relevant sources
+   - `scrape_page` — pulls detailed, ground-truth content from specific pages
+4. A **Max Iterations** slider controls how many reasoning/tool-use steps the agent is allowed to take per sub-question (default: 10).
+5. Once complete, a **Final report** is generated with headed sections and takeaways. Use **Download report (.md)** to save it locally, or expand **Past runs in this session** to revisit earlier reports.
 
-</td>
-<td width="50%" valign="top">
+---
 
-**Configurable depth**
-A `Max Iterations` control decides how deep the agent digs.
+## Evaluation
 
-**One-click export**
-Download any report instantly as a `.md` file.
+Rather than just assert the agent "works," it's tested against a fixed set of **18 research queries** spanning three categories: factual (single checkable answer), comparative (requires synthesizing multiple sources), and ambiguous/open-ended (vague scope, no single correct answer).
 
-**Session history**
-Revisit and compare past research runs.
+| Metric | Result |
+|---|---|
+| **Completion rate** | 16/18 (89%) — finished without hitting the iteration limit or erroring out |
+| **Avg latency** | 58.9s per report |
+| **Avg distinct sources per report** | 7.9 |
 
-</td>
-</tr>
-</table>
+Scoring on "did it actually answer the question" and "is it factually accurate" was done via LLM-judge (grading each report against the *actual* search/scrape evidence retrieved during that specific run, not the judge's own general knowledge), spot-checked manually against a sample of the raw transcripts.
 
-<br/>
+Full per-query results, raw transcripts (including the complete tool-call trace for every run), and scoring methodology are in [`eval_results/`](eval_results/) — see [`eval_results/eval_results.md`](eval_results/eval_results.md) for the full breakdown and [`SCORING_GUIDE.md`](SCORING_GUIDE.md) for the rubric.
 
-## Tech Stack
-
-<p>
-  <img src="https://img.shields.io/badge/Python-6366F1?style=for-the-badge&logo=python&logoColor=white&labelColor=1E1B2E" alt="Python"/>
-  <img src="https://img.shields.io/badge/Streamlit-8B5CF6?style=for-the-badge&logo=streamlit&logoColor=white&labelColor=1E1B2E" alt="Streamlit"/>
-  <img src="https://img.shields.io/badge/LangChain-A855F7?style=for-the-badge&logo=langchain&logoColor=white&labelColor=1E1B2E" alt="LangChain"/>
-  <img src="https://img.shields.io/badge/Groq-EC4899?style=for-the-badge&logoColor=white&labelColor=1E1B2E" alt="Groq"/>
-  <img src="https://img.shields.io/badge/python--dotenv-C026D3?style=for-the-badge&logo=.env&logoColor=white&labelColor=1E1B2E" alt="dotenv"/>
-  <img src="https://img.shields.io/badge/Markdown-7C3AED?style=for-the-badge&logo=markdown&logoColor=white&labelColor=1E1B2E" alt="Markdown"/>
-</p>
-
-<div align="center">
-
-| Layer | Technology | Purpose |
-|---|---|---|
-| Reasoning / LLM | **Groq** | LPU-accelerated inference powering the agent's decisions |
-| Orchestration | **LangChain** | Agent planning, tool routing, and execution loop |
-| Interface | **Streamlit** | Interactive UI and live reasoning display |
-| Research Tools | Web search & scraping utilities | Ground-truth data gathering |
-| Output | Markdown | Structured, portable, exportable reports |
-| Language | **Python 3.9+** | Core implementation |
-
-</div>
-
-<br/>
-
-<img width="100%" height="4" src="https://capsule-render.vercel.app/api?type=rect&color=0:6366F1,50:8B5CF6,100:EC4899&height=4"/>
-
-## How It Works
-
-```mermaid
-flowchart LR
-    A[Research Goal] --> B[Agent Plans Steps]
-    B --> C[web_search]
-    B --> D[scrape_page]
-    C --> E[Synthesize Findings]
-    D --> E
-    E --> F[Structured Report]
-    F --> G[Download .md]
-
-    style A fill:#6366F1,stroke:#1E1B2E,color:#fff
-    style B fill:#8B5CF6,stroke:#1E1B2E,color:#fff
-    style C fill:#A855F7,stroke:#1E1B2E,color:#fff
-    style D fill:#A855F7,stroke:#1E1B2E,color:#fff
-    style E fill:#C026D3,stroke:#1E1B2E,color:#fff
-    style F fill:#DB2777,stroke:#1E1B2E,color:#fff
-    style G fill:#EC4899,stroke:#1E1B2E,color:#fff
-```
-
-1. **Enter a research goal** describing what you want investigated.
-2. **Run the agent** — it plans its own approach with no further input needed.
-3. **Watch it work** — every `web_search` and `scrape_page` call streams live under *Agent Reasoning*.
-4. **Review the report** — a structured, headed Markdown document is generated automatically.
-5. **Export or revisit** — download the report as `.md`, or browse past runs from the session history.
-
-<br/>
-
-## Getting Started
-
-### Prerequisites
-
-- Python 3.9+
-- A [Groq API key](https://console.groq.com/) (powers the agent's reasoning)
-- API access for the web search / scraping tool used by the agent
-
-### Installation
-
+To reproduce:
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Amruta-Dabholkar/research-agent-python.git
-cd research-agent-python
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Configure environment variables
-cp .env.example .env   # then fill in your keys
+python eval.py            # runs all 18 queries, saves transcripts + metrics
+python auto_score.py      # LLM-judge scoring against each run's own evidence
+python summarize_eval.py  # produces eval_results/eval_results.md
 ```
 
-`.env`
-```env
-GROQ_API_KEY=your_groq_api_key_here
-# add any additional keys required by the web_search / scrape_page tools
-```
+---
 
-### Run
+## Tech stack
 
-```bash
-streamlit run streamlit_app.py
-```
+`Python` · `LangChain` · `Groq API` (`llama-3.1-8b-instant`) · `Streamlit` · `DuckDuckGo Search` · `BeautifulSoup`
 
-Then open the local URL Streamlit provides — typically `http://localhost:8501`.
+---
 
-<br/>
-
-## Project Structure
+## Project structure
 
 ```
-research-agent-python/
-├── streamlit_app.py      # Streamlit UI entry point
-├── agent/                # Agent logic, tools & orchestration
-├── requirements.txt      # Python dependencies
-├── .env.example           # Environment variable template
-└── README.md
+research_agent_python/
+├── streamlit_app.py      # Streamlit UI — runs the orchestrator, shows live plan/reflection progress
+├── orchestrator.py        # Plan → Execute → Reflect → Synthesize loop
+├── agent.py                # Tool-calling agent builders (full-report mode + scoped subtask mode)
+├── tools.py                 # web_search, scrape_page, calculator — with retries & robots.txt compliance
+├── eval.py                    # Runs the 18-query test set, logs automated metrics
+├── auto_score.py                # LLM-judge scoring against each run's captured evidence
+├── summarize_eval.py              # Aggregates eval_results/results.csv into the final report
+├── SCORING_GUIDE.md                 # Manual scoring rubric
+├── eval_results/                      # Raw transcripts + metrics from the latest eval run
+├── screenshots/                         # UI screenshots used in this README
+├── requirements.txt
+└── .env.example
 ```
 
-<br/>
+---
 
-<img width="100%" height="4" src="https://capsule-render.vercel.app/api?type=rect&color=0:6366F1,50:8B5CF6,100:EC4899&height=4"/>
+## Setup
 
-## Screenshots
+1. Clone the repo and install dependencies:
+   ```bash
+   git clone https://github.com/Amruta-Dabholkar/research-agent-python.git
+   cd research-agent-python
+   pip install -r requirements.txt
+   ```
+2. Copy `.env.example` to `.env` and add your Groq API key:
+   ```
+   GROQ_API_KEY=your-key-here
+   ```
+   (Web search runs on DuckDuckGo and needs no API key. If you have a SerpAPI key and want Google-quality results instead, see the commented-out alternative in `tools.py`.)
+3. Run the app:
+   ```bash
+   streamlit run streamlit_app.py
+   ```
+   Then open the local URL Streamlit provides (usually `http://localhost:8501`) in your browser.
 
-<div align="center">
+   Or use the CLI directly:
+   ```bash
+   python agent.py
+   ```
 
-**Live agent reasoning and tool calls**
+> ⚠️ The app will show an **"API keys required"** status until a valid Groq API key is configured.
 
-<img src="https://raw.githubusercontent.com/Amruta-Dabholkar/research-agent-python/main/screenshots/agentic-workflow.png" width="85%"/>
+---
 
-<br/><br/>
+## 📸 Screenshots
 
-**Structured final report**
+**Agent input and live tool calls**
 
-<img src="https://raw.githubusercontent.com/Amruta-Dabholkar/research-agent-python/main/screenshots/structured-output.png" width="85%"/>
+![Agent input and tool calls](screenshots/research-agent-01-input-and-tool-calls.png)
 
-<br/><br/>
+**Final report — introduction**
 
-**Recommendations, conclusion & export**
+![Final report intro](screenshots/research-agent-02-final-report-intro.png)
 
-<img src="https://raw.githubusercontent.com/Amruta-Dabholkar/research-agent-python/main/screenshots/report-export.png" width="85%"/>
+**Pricing comparison table in the generated report**
 
-</div>
+![Pricing comparison table](screenshots/research-agent-03-pricing-comparison-table.png)
 
-<br/>
+**Sources section and report download**
+
+![Sources and download](screenshots/research-agent-04-sources-and-download.png)
+
+---
+
+## 💡 Tips for best results
+
+- **Break down large goals** into smaller, focused research questions for better results.
+- **Use consistent keywords** in your research goal to improve search accuracy.
+- **Save and review past reports** to refine future research prompts.
+- **Be patient** — complex research tasks may take the agent a minute or two to complete.
+
+---
+
+## Engineering notes / known limitations
+
+Being upfront about the rough edges, since that's more useful than pretending there aren't any:
+
+- **DuckDuckGo search quality** is generally a notch below Google (via SerpAPI) — fewer results for niche queries, occasionally less authoritative sources. Chosen here because it needs no API key or quota, so anyone cloning this repo can run it immediately.
+- **LLM-judge scoring** is a faster substitute for full manual review, not a replacement for it. It's a real check (graded against each run's actual retrieved evidence, not the judge's general knowledge) but should be spot-checked by a human before treating the numbers as final — see `SCORING_GUIDE.md`.
+- **`llama-3.1-8b-instant`** is a small, fast model chosen for cost/latency — a larger model would likely improve the 2/18 incomplete-run rate and factual accuracy scores at the cost of latency.
+- No caching yet — repeated searches/scrapes within a session re-fetch rather than reuse. On the roadmap.
 
 ## Roadmap
 
-- [ ] Support for additional LLM providers
-- [ ] PDF export alongside Markdown
-- [ ] Source citation tracking within reports
-- [ ] Multi-agent collaboration for larger research goals
+- [x] Automated evaluation harness with honest, measured completion/accuracy numbers
+- [x] Explicit plan → execute → reflect loop with a real stopping condition
+- [x] Explicit failure handling — retries, robots.txt compliance, categorized errors
+- [x] Citation tracking — map individual claims in the report back to specific source URLs, not just a general source list
+- [ ] Caching for repeated searches/scrapes within a session
+- [ ] Unit tests for tools (mocked responses) + CI on push
 
-<br/>
+---
+
+## ❤️ Credits
+
+Made with Streamlit + LangChain, powered by Groq.
 
 ## License
 
-Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
+This project is licensed under the [MIT License](LICENSE) — see the [`LICENSE`](LICENSE) file for details.
 
-Copyright © 2026 Amruta Anand Dabholkar
-
-<br/>
-
-<div align="center" id="connect">
-
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:EC4899,50:8B5CF6,100:6366F1&height=140&section=header&text=Let's%20Connect&fontSize=30&fontColor=FFFFFF&fontAlignY=45"/>
-
-<p>
-  <a href="https://github.com/Amruta-Dabholkar/">
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=1E1B2E" alt="GitHub"/>
-  </a>
-  <a href="https://www.linkedin.com/in/amruta-dabholkar/">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=1E1B2E" alt="LinkedIn"/>
-  </a>
-</p>
-
-If this project was useful or interesting, consider giving it a star.
-
-</div>
+Copyright (c) 2026 Amruta Anand Dabholkar
