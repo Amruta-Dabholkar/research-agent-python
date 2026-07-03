@@ -1,14 +1,11 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/-Autonomous%20Research%20Agent-6C5CE7?style=for-the-badge" alt="title badge" height="40"/>
-
-### An AI agent that plans, searches, scrapes, and writes research reports — autonomously.
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:6366F1,50:8B5CF6,100:EC4899&height=200&section=header&text=Autonomous%20Research%20Agent&fontSize=42&fontColor=FFFFFF&animation=fadeIn&fontAlignY=38&desc=Plans.%20Searches.%20Scrapes.%20Writes.%20All%20on%20its%20own.&descAlignY=58&descSize=18"/>
 
 <p>
-  <img src="https://img.shields.io/github/last-commit/Amruta-Dabholkar/research-agent-python?style=flat-square&color=6C5CE7" alt="last commit"/>
-  <img src="https://img.shields.io/github/languages/top/Amruta-Dabholkar/research-agent-python?style=flat-square&color=3776AB" alt="top language"/>
-  <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="license"/>
-  <img src="https://img.shields.io/badge/status-active-2ea44f?style=flat-square" alt="status"/>
+  <img src="https://img.shields.io/badge/status-active-8B5CF6?style=for-the-badge&labelColor=1E1B2E" alt="status"/>
+  <img src="https://img.shields.io/badge/license-MIT-6366F1?style=for-the-badge&labelColor=1E1B2E" alt="license"/>
+  <img src="https://img.shields.io/badge/python-3.9+-EC4899?style=for-the-badge&labelColor=1E1B2E" alt="python"/>
 </p>
 
 <p>
@@ -49,6 +46,8 @@
 
 <br/>
 
+<img width="100%" height="4" src="https://capsule-render.vercel.app/api?type=rect&color=0:6366F1,50:8B5CF6,100:EC4899&height=4"/>
+
 ## Problem Statement
 
 Manual research is slow, repetitive, and hard to scale:
@@ -79,26 +78,50 @@ In short: you provide the question, the agent handles the investigation.
 
 <br/>
 
+<img width="100%" height="4" src="https://capsule-render.vercel.app/api?type=rect&color=0:6366F1,50:8B5CF6,100:EC4899&height=4"/>
+
 ## Features
 
-- **Goal-driven autonomy** — give it one research goal; it plans and executes the rest
-- **Live agent reasoning** — every tool call is visible as it happens
-- **Structured final reports** — organized into clear, headed sections
-- **Configurable depth** — a `Max Iterations` control determines how deep the agent digs
-- **One-click export** — download any report instantly as a `.md` file
-- **Session history** — revisit and compare past research runs
+<table>
+<tr>
+<td width="50%" valign="top">
+
+**Goal-driven autonomy**
+Give it one research goal — it plans and executes the rest.
+
+**Live agent reasoning**
+Every tool call is visible in the UI as it happens.
+
+**Structured final reports**
+Organized into clear, headed sections automatically.
+
+</td>
+<td width="50%" valign="top">
+
+**Configurable depth**
+A `Max Iterations` control decides how deep the agent digs.
+
+**One-click export**
+Download any report instantly as a `.md` file.
+
+**Session history**
+Revisit and compare past research runs.
+
+</td>
+</tr>
+</table>
 
 <br/>
 
 ## Tech Stack
 
 <p>
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
-  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"/>
-  <img src="https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white" alt="LangChain"/>
-  <img src="https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logoColor=white" alt="Groq"/>
-  <img src="https://img.shields.io/badge/python--dotenv-ECD53F?style=for-the-badge&logo=.env&logoColor=black" alt="dotenv"/>
-  <img src="https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white" alt="Markdown"/>
+  <img src="https://img.shields.io/badge/Python-6366F1?style=for-the-badge&logo=python&logoColor=white&labelColor=1E1B2E" alt="Python"/>
+  <img src="https://img.shields.io/badge/Streamlit-8B5CF6?style=for-the-badge&logo=streamlit&logoColor=white&labelColor=1E1B2E" alt="Streamlit"/>
+  <img src="https://img.shields.io/badge/LangChain-A855F7?style=for-the-badge&logo=langchain&logoColor=white&labelColor=1E1B2E" alt="LangChain"/>
+  <img src="https://img.shields.io/badge/Groq-EC4899?style=for-the-badge&logoColor=white&labelColor=1E1B2E" alt="Groq"/>
+  <img src="https://img.shields.io/badge/python--dotenv-C026D3?style=for-the-badge&logo=.env&logoColor=white&labelColor=1E1B2E" alt="dotenv"/>
+  <img src="https://img.shields.io/badge/Markdown-7C3AED?style=for-the-badge&logo=markdown&logoColor=white&labelColor=1E1B2E" alt="Markdown"/>
 </p>
 
 <div align="center">
@@ -116,6 +139,8 @@ In short: you provide the question, the agent handles the investigation.
 
 <br/>
 
+<img width="100%" height="4" src="https://capsule-render.vercel.app/api?type=rect&color=0:6366F1,50:8B5CF6,100:EC4899&height=4"/>
+
 ## How It Works
 
 ```mermaid
@@ -127,6 +152,14 @@ flowchart LR
     D --> E
     E --> F[Structured Report]
     F --> G[Download .md]
+
+    style A fill:#6366F1,stroke:#1E1B2E,color:#fff
+    style B fill:#8B5CF6,stroke:#1E1B2E,color:#fff
+    style C fill:#A855F7,stroke:#1E1B2E,color:#fff
+    style D fill:#A855F7,stroke:#1E1B2E,color:#fff
+    style E fill:#C026D3,stroke:#1E1B2E,color:#fff
+    style F fill:#DB2777,stroke:#1E1B2E,color:#fff
+    style G fill:#EC4899,stroke:#1E1B2E,color:#fff
 ```
 
 1. **Enter a research goal** describing what you want investigated.
@@ -188,6 +221,8 @@ research-agent-python/
 
 <br/>
 
+<img width="100%" height="4" src="https://capsule-render.vercel.app/api?type=rect&color=0:6366F1,50:8B5CF6,100:EC4899&height=4"/>
+
 ## Screenshots
 
 <div align="center">
@@ -229,18 +264,16 @@ Copyright © 2026 Amruta Anand Dabholkar
 
 <br/>
 
----
-
 <div align="center" id="connect">
 
-### Amruta Dabholkar
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:EC4899,50:8B5CF6,100:6366F1&height=140&section=header&text=Let's%20Connect&fontSize=30&fontColor=FFFFFF&fontAlignY=45"/>
 
 <p>
   <a href="https://github.com/Amruta-Dabholkar/">
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=1E1B2E" alt="GitHub"/>
   </a>
   <a href="https://www.linkedin.com/in/amruta-dabholkar/">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=1E1B2E" alt="LinkedIn"/>
   </a>
 </p>
 
