@@ -149,15 +149,15 @@ research_agent_python/
 
 ![Agent input and tool calls](screenshots/research-agent-01-input-and-tool-calls.png)
 
-**Final report — introduction**
+***Final report — introduction***
 
 ![Final report intro](screenshots/research-agent-02-final-report-intro.png)
 
-**Pricing comparison table in the generated report**
+***Pricing comparison table in the generated report***
 
 ![Pricing comparison table](screenshots/research-agent-03-pricing-comparison-table.png)
 
-**Sources section and report download**
+***Sources section and report download***
 
 ![Sources and download](screenshots/research-agent-04-sources-and-download.png)
 
