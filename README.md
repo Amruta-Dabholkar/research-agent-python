@@ -1,157 +1,210 @@
 <div align="center">
 
-# 🔍 Autonomous Research Agent
+<img src="https://img.shields.io/badge/-Autonomous%20Research%20Agent-6C5CE7?style=for-the-badge" alt="title badge" height="40"/>
 
-### An AI agent that plans, searches, scrapes & writes research reports — all on its own.
+### An AI agent that plans, searches, scrapes, and writes research reports — autonomously.
 
 <p>
-  <img src="https://img.shields.io/badge/status-active-2ea44f?style=for-the-badge" alt="status"/>
-  <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="license"/>
-  <img src="https://img.shields.io/badge/python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="python"/>
-  <img src="https://img.shields.io/badge/made%20with-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="streamlit"/>
+  <img src="https://img.shields.io/github/last-commit/Amruta-Dabholkar/research-agent-python?style=flat-square&color=6C5CE7" alt="last commit"/>
+  <img src="https://img.shields.io/github/languages/top/Amruta-Dabholkar/research-agent-python?style=flat-square&color=3776AB" alt="top language"/>
+  <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="license"/>
+  <img src="https://img.shields.io/badge/status-active-2ea44f?style=flat-square" alt="status"/>
 </p>
 
 <p>
-  <a href="https://research-agent-python.streamlit.app/"><strong>🚀 Live Demo</strong></a>
-  ·
-  <a href="#-setup">⚙️ Setup</a>
-  ·
-  <a href="#-how-it-works">🖥️ How It Works</a>
-  ·
-  <a href="#-screenshots">📸 Screenshots</a>
+  <a href="https://research-agent-python.streamlit.app/"><strong>Live Demo</strong></a> ·
+  <a href="#getting-started"><strong>Getting Started</strong></a> ·
+  <a href="#how-it-works"><strong>How It Works</strong></a> ·
+  <a href="#screenshots"><strong>Screenshots</strong></a> ·
+  <a href="#connect"><strong>Connect</strong></a>
 </p>
 
 </div>
 
 <br/>
 
-## 🧠 About
+## Table of Contents
 
-**Autonomous Research Agent** takes a single, plain-English research goal and runs with it. It plans its own multi-step investigation, searches the web, scrapes pages for ground-truth detail, and compiles everything into a clean, structured Markdown report — with a live view of its own reasoning as it works, all wrapped in a simple Streamlit UI.
-
-> 💬 *"Analyze cybersecurity risks in cloud-based education platforms and propose mitigation strategies."* — give it a goal like that, and watch it think.
+- [Overview](#overview)
+- [Problem Statement](#problem-statement)
+- [Solution](#solution)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [How It Works](#how-it-works)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Screenshots](#screenshots)
+- [Roadmap](#roadmap)
+- [License](#license)
+- [Connect](#connect)
 
 <br/>
 
-## ✨ Features
+## Overview
 
-| | |
+**Autonomous Research Agent** turns a single, plain-English research goal into a fully-researched, structured report. Rather than answering from memory, the agent plans its own multi-step investigation, calls tools to search the web and scrape pages for ground-truth detail, and compiles its findings into a clean Markdown report — with its entire reasoning process visible in real time through a Streamlit interface.
+
+> *"Analyze cybersecurity risks in cloud-based education platforms and propose mitigation strategies."*
+> Give it a prompt like that, and it plans, researches, and writes the report on its own.
+
+<br/>
+
+## Problem Statement
+
+Manual research is slow, repetitive, and hard to scale:
+
+- Formulating the right search queries takes iteration and expertise
+- Relevant information is scattered across dozens of tabs and sources
+- More time goes into copy-pasting and skimming than actual analysis
+- Turning scattered notes into one coherent, well-structured report is a separate task in itself
+- The entire process has to be repeated from scratch for every new topic
+
+For students, developers, analysts, and lifelong learners, this makes fast, thorough research disproportionately time-consuming.
+
+<br/>
+
+## Solution
+
+Autonomous Research Agent automates the research pipeline end-to-end:
+
+| Problem | How the agent solves it |
 |---|---|
-| 🎯 **Goal-driven autonomy** | Give it one research goal — it breaks it into sub-tasks on its own |
-| 🧩 **Live agent reasoning** | Watch every tool call (`web_search`, `scrape_page`) as it happens |
-| 📄 **Structured final report** | Auto-compiled into Introduction, Key Risks, Mitigation, Conclusion & more |
-| 🎚️ **Configurable iteration limit** | A `Max Iterations` slider controls how deep the agent digs (default: 10) |
-| 💾 **Exportable reports** | Download any report instantly as a `.md` file |
-| 🕓 **Session history** | Revisit and compare past runs within the same session |
+| Manual query planning | Breaks a single goal into the right sub-questions automatically |
+| Scattered, shallow sources | Uses `web_search` + `scrape_page` to gather ground-truth content, not just snippets |
+| No visibility into the process | Streams live agent reasoning so you see exactly what it searched and why |
+| Disorganized notes | Synthesizes findings into a structured report — key findings, risks, recommendations, conclusion |
+| No reusable output | Exports the final report as a downloadable Markdown file |
+
+In short: you provide the question, the agent handles the investigation.
 
 <br/>
 
-## 🛠️ Tech Stack
+## Features
+
+- **Goal-driven autonomy** — give it one research goal; it plans and executes the rest
+- **Live agent reasoning** — every tool call is visible as it happens
+- **Structured final reports** — organized into clear, headed sections
+- **Configurable depth** — a `Max Iterations` control determines how deep the agent digs
+- **One-click export** — download any report instantly as a `.md` file
+- **Session history** — revisit and compare past research runs
+
+<br/>
+
+## Tech Stack
 
 <p>
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
   <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"/>
   <img src="https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white" alt="LangChain"/>
-  <img src="https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTEyIDJMMiAyMmgyMHoiLz48L3N2Zz4=&logoColor=white" alt="Groq"/>
-  <img src="https://img.shields.io/badge/dotenv-ECD53F?style=for-the-badge&logo=.env&logoColor=black" alt="dotenv"/>
+  <img src="https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logoColor=white" alt="Groq"/>
+  <img src="https://img.shields.io/badge/python--dotenv-ECD53F?style=for-the-badge&logo=.env&logoColor=black" alt="dotenv"/>
   <img src="https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white" alt="Markdown"/>
 </p>
 
 <div align="center">
 
-| Layer | Technology |
-|---|---|
-| 🧠 Reasoning / LLM | **Groq** (LPU-accelerated inference) |
-| 🔗 Agent Orchestration | **LangChain** |
-| 🎨 Frontend / UI | **Streamlit** |
-| 🌐 Research Tools | Web search & page scraping utilities |
-| 📝 Output | Structured **Markdown** reports |
-| 🐍 Language | **Python 3.9+** |
+| Layer | Technology | Purpose |
+|---|---|---|
+| Reasoning / LLM | **Groq** | LPU-accelerated inference powering the agent's decisions |
+| Orchestration | **LangChain** | Agent planning, tool routing, and execution loop |
+| Interface | **Streamlit** | Interactive UI and live reasoning display |
+| Research Tools | Web search & scraping utilities | Ground-truth data gathering |
+| Output | Markdown | Structured, portable, exportable reports |
+| Language | **Python 3.9+** | Core implementation |
 
 </div>
 
 <br/>
 
-## 🖥️ How It Works
+## How It Works
 
 ```mermaid
 flowchart LR
-    A[📝 Enter Research Goal] --> B[🧠 Agent Plans Steps]
-    B --> C[🌐 web_search]
-    B --> D[📄 scrape_page]
-    C --> E[🧩 Synthesize Findings]
+    A[Research Goal] --> B[Agent Plans Steps]
+    B --> C[web_search]
+    B --> D[scrape_page]
+    C --> E[Synthesize Findings]
     D --> E
-    E --> F[📑 Structured Report]
-    F --> G[💾 Download .md]
+    E --> F[Structured Report]
+    F --> G[Download .md]
 ```
 
-1. Enter a **research goal** describing what you want investigated.
-2. Click **Run research**.
-3. The agent plans and works autonomously — visible live under **Agent reasoning**:
-   - `web_search` → queries the web for relevant sources
-   - `scrape_page` → pulls ground-truth content from specific pages
-4. A **Final report** is generated with headed sections and takeaways.
-5. **Download report (.md)**, or revisit **Past runs** from the same session.
+1. **Enter a research goal** describing what you want investigated.
+2. **Run the agent** — it plans its own approach with no further input needed.
+3. **Watch it work** — every `web_search` and `scrape_page` call streams live under *Agent Reasoning*.
+4. **Review the report** — a structured, headed Markdown document is generated automatically.
+5. **Export or revisit** — download the report as `.md`, or browse past runs from the session history.
 
 <br/>
 
-## ⚙️ Requirements
+## Getting Started
 
-- 🐍 Python 3.9+
-- [Streamlit](https://streamlit.io/)
-- [LangChain](https://www.langchain.com/)
-- 🔑 A **Groq API key** (powers the agent's reasoning)
-- 🔑 A web search / scraping API key or service
+### Prerequisites
 
-> ⚠️ The app displays an **"API keys required"** status until valid keys are configured.
+- Python 3.9+
+- A [Groq API key](https://console.groq.com/) (powers the agent's reasoning)
+- API access for the web search / scraping tool used by the agent
 
-<br/>
+### Installation
 
-## 🔑 Setup
-
-**1. Clone the repository**
 ```bash
+# 1. Clone the repository
 git clone https://github.com/Amruta-Dabholkar/research-agent-python.git
 cd research-agent-python
-```
 
-**2. Install dependencies**
-```bash
+# 2. Install dependencies
 pip install -r requirements.txt
+
+# 3. Configure environment variables
+cp .env.example .env   # then fill in your keys
 ```
 
-**3. Configure your API keys** — via `.env` or Streamlit secrets:
+`.env`
 ```env
 GROQ_API_KEY=your_groq_api_key_here
-# add any additional keys required for web_search / scrape_page tools
+# add any additional keys required by the web_search / scrape_page tools
 ```
 
-**4. Run the app**
+### Run
+
 ```bash
 streamlit run streamlit_app.py
 ```
 
-**5.** Open the local URL Streamlit provides — usually `http://localhost:8501` 🎉
+Then open the local URL Streamlit provides — typically `http://localhost:8501`.
 
 <br/>
 
-## 📸 Screenshots
+## Project Structure
+
+```
+research-agent-python/
+├── streamlit_app.py      # Streamlit UI entry point
+├── agent/                # Agent logic, tools & orchestration
+├── requirements.txt      # Python dependencies
+├── .env.example           # Environment variable template
+└── README.md
+```
+
+<br/>
+
+## Screenshots
 
 <div align="center">
 
-**🧩 Agentic workflow — live reasoning and tool calls**
+**Live agent reasoning and tool calls**
 
 <img src="https://raw.githubusercontent.com/Amruta-Dabholkar/research-agent-python/main/screenshots/agentic-workflow.png" width="85%"/>
 
 <br/><br/>
 
-**📊 Structured final report**
+**Structured final report**
 
 <img src="https://raw.githubusercontent.com/Amruta-Dabholkar/research-agent-python/main/screenshots/structured-output.png" width="85%"/>
 
 <br/><br/>
 
-**✅ Mitigation strategies, conclusion & export**
+**Recommendations, conclusion & export**
 
 <img src="https://raw.githubusercontent.com/Amruta-Dabholkar/research-agent-python/main/screenshots/report-export.png" width="85%"/>
 
@@ -159,33 +212,18 @@ streamlit run streamlit_app.py
 
 <br/>
 
-## 💡 Tips for Best Results
+## Roadmap
 
-- 🎯 **Break down large goals** into smaller, focused sub-tasks
-- 🔍 **Use consistent keywords** to improve search accuracy
-- 🗂️ **Save and review past reports** to refine future prompts
-- ⏳ **Be patient** — complex research may take a few minutes
-
-<br/>
-
-## 📦 Output Format
-
-Reports are compiled in structured Markdown, typically including:
-
-- 📖 **Introduction** — framing of the research topic
-- 🔎 **Core Findings** — numbered, bolded points with explanations
-- 🛡️ **Recommendations / Mitigation Strategies** — actionable next steps
-- ✅ **Conclusion** — summary tying findings back to the original goal
+- [ ] Support for additional LLM providers
+- [ ] PDF export alongside Markdown
+- [ ] Source citation tracking within reports
+- [ ] Multi-agent collaboration for larger research goals
 
 <br/>
 
-## ❤️ Credits
+## License
 
-Made with **Streamlit** + **LangChain**, powered by **Groq**.
-
-## 📄 License
-
-Licensed under the **MIT License** — see [LICENSE](./LICENSE) for details.
+Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
 
 Copyright © 2026 Amruta Anand Dabholkar
 
@@ -193,9 +231,9 @@ Copyright © 2026 Amruta Anand Dabholkar
 
 ---
 
-<div align="center">
+<div align="center" id="connect">
 
-### 👩‍💻 Author: Amruta Dabholkar
+### Amruta Dabholkar
 
 <p>
   <a href="https://github.com/Amruta-Dabholkar/">
@@ -206,6 +244,6 @@ Copyright © 2026 Amruta Anand Dabholkar
   </a>
 </p>
 
-⭐ If you found this project interesting, consider giving it a star!
+If this project was useful or interesting, consider giving it a star.
 
 </div>
