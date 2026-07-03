@@ -5,7 +5,8 @@ Streamlit UI for the Autonomous Research Agent.
 import os
 import streamlit as st
 from langchain_core.callbacks.base import BaseCallbackHandler
-from agent import run_research_agent
+from orchestrator import run_research_agent
+
 
 st.set_page_config(page_title="Autonomous Research Agent", page_icon="\U0001F50E", layout="wide")
 
