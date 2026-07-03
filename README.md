@@ -143,8 +143,9 @@ research_agent_python/
 ---
 
 ## 📸 Screenshots
+---
 
-**Agent input and live tool calls**
+***Agent input and live tool calls***
 
 ![Agent input and tool calls](screenshots/research-agent-01-input-and-tool-calls.png)
 
