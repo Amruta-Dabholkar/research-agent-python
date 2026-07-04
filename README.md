@@ -107,7 +107,8 @@ research_agent_python/
 ├── summarize_eval.py              # Aggregates eval_results/results.csv into the final report
 ├── SCORING_GUIDE.md                 # Manual scoring rubric
 ├── eval_results/                      # Raw transcripts + metrics from the latest eval run
-├── screenshots/                         # UI screenshots used in this README
+├── project-docs/                        # Project documentation (design notes, planning, etc.)
+├── screenshots/                            # UI screenshots used in this README
 ├── requirements.txt
 └── .env.example
 ```
