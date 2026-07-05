@@ -8,7 +8,11 @@ This started as a from-scratch rebuild of an n8n AI Agent prototype: instead of 
 
 🌐 **Live demo:** [research-agent-python.streamlit.app](https://research-agent-python.streamlit.app/)
 ---
-🧑‍💻 **Author:** Amruta Dabholkar — 3rd Year Computer Engineering Student passionate about Data Science & AI. I believe in learning by doing — every concept I study gets coded, committed, and pushed here.
+
+##🧑‍💻 Author:
+**Amruta Dabholkar**
+3rd Year Computer Engineering Student passionate about Data Science & AI. I believe in learning by doing — every concept I study gets coded, committed, and pushed here.
+🤖 Gen AI & Agentic Systems Intern @ Lenovo LEAP
 ---
 
 ## 🧠How it works
