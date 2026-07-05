@@ -210,8 +210,6 @@ Being upfront about the rough edges, since that's more useful than pretending th
 
 ---
 
-**Amruta Dabholkar**
-
 ## 👩‍💻 About Me
 
 **Amruta Dabholkar**
