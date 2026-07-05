@@ -224,7 +224,7 @@ Being upfront about the rough edges, since that's more useful than pretending th
 ## 🔗 Connect
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Amruta_Dabholkar-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/amruta-dabholkar)
 [![GitHub](https://img.shields.io/badge/GitHub-Amruta--Dabholkar-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Amruta-Dabholkar)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ce24f007@ybit.ac.in)
+
 ---
 
 ## ❤️ Credits
