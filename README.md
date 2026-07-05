@@ -209,21 +209,23 @@ Being upfront about the rough edges, since that's more useful than pretending th
 - 🔗 Document progress on LinkedIn
 
 ---
-## 👤 Author
 
 **Amruta Dabholkar**
 
-- GitHub: [@Amruta-Dabholkar](https://github.com/Amruta-Dabholkar)
-- LinkedIn: [Amruta Dabholkar](https://www.linkedin.com/in/amruta-dabholkar/)
-- Email:ce24f007@ybit.ac.in
+## 👩‍💻 About Me
 
+**Amruta Dabholkar**
+- 🎓 3rd Year **Computer Engineering** student at **YBIT, Sawantwadi** | CGPA: **8.50**
+- 🤖 Currently interning at **Lenovo LEAP Gen AI Program**
+- 📊 Passionate about **Data Science, Machine Learning & Generative AI**
+- 🌍 Building in public, one commit at a time 🟩
 ---
 
 ## 🔗 Connect
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Amruta_Dabholkar-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/amruta-dabholkar-2a51a4378/)
 [![GitHub](https://img.shields.io/badge/GitHub-Amruta--Dabholkar-black?style=flat&logo=github)](https://github.com/Amruta-Dabholkar)
-
+[![Email](https://img.shields.io/badge/Email-ce24f007@ybit.ac.in-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ce24f007@ybit.ac.in)
 ---
 
 ## ❤️ Credits
