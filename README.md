@@ -9,12 +9,6 @@ This started as a from-scratch rebuild of an n8n AI Agent prototype: instead of 
 🌐 **Live demo:** [research-agent-python.streamlit.app](https://research-agent-python.streamlit.app/)
 ---
 
-##🧑‍💻 Author:
-Amruta Dabholkar
-3rd Year Computer Engineering Student passionate about Data Science & AI. I believe in learning by doing — every concept I study gets coded, committed, and pushed here.
-🤖 Gen AI & Agentic Systems Intern @ Lenovo LEAP
----
-
 ## 🧠How it works
 
 Most "agent" projects are a single LLM stuck in a tool-calling loop until it decides to stop or runs out of steps. This one is structured differently, in four explicit phases:
@@ -213,6 +207,15 @@ Being upfront about the rough edges, since that's more useful than pretending th
 - 💻 Code every concept, don't just read
 - 🟩 Push to GitHub every single day
 - 🔗 Document progress on LinkedIn
+
+---
+## 👤 Author
+
+**Amruta Dabholkar**
+
+- GitHub: [@Amruta-Dabholkar](https://github.com/Amruta-Dabholkar)
+- LinkedIn: [Amruta Dabholkar](https://www.linkedin.com/in/amruta-dabholkar/)
+- Email:ce24f007@ybit.ac.in
 
 ---
 
