@@ -118,7 +118,7 @@ research_agent_python/
 
 The `project-docs/` folder contains supporting documentation for this project:
 
-- **Autonomous_Research_Agent_Concept_Note.pptx** — presentation version of the concept note
+- **Autonomous_Research_Agent_Concept_Note.pptx** — slide deck summarizing the project's problem statement, approach, and key features
 - **Concept_Note_Research_Agent.docx** — detailed concept note covering problem statement, objectives, and approach
 - **lean_canvas_research_agent.pdf** — Lean Canvas outlining the project's value proposition, users, and key metrics
 ---
