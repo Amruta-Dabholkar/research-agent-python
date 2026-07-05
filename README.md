@@ -116,7 +116,8 @@ research_agent_python/
 ---
 ## 📄 Project Documentation
 
-The `project-docs/` folder contains supporting documentation for this project:
+Supporting documentation for this project is available in the 
+[`project-docs/`](https://github.com/Amruta-Dabholkar/research-agent-python/tree/main/project-docs) folder:
 
 - **Autonomous_Research_Agent_Concept_Note.pptx** — slide deck summarizing the project's problem statement, approach, and key features
 - **Concept_Note_Research_Agent.docx** — detailed concept note covering problem statement, objectives, and approach
