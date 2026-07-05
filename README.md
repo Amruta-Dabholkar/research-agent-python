@@ -10,7 +10,7 @@ This started as a from-scratch rebuild of an n8n AI Agent prototype: instead of 
 ---
 
 ##🧑‍💻 Author:
-**Amruta Dabholkar**
+Amruta Dabholkar
 3rd Year Computer Engineering Student passionate about Data Science & AI. I believe in learning by doing — every concept I study gets coded, committed, and pushed here.
 🤖 Gen AI & Agentic Systems Intern @ Lenovo LEAP
 ---
